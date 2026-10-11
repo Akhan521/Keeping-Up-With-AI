@@ -1,6 +1,6 @@
 # Keeping-Up-With-AI
 
-A personal knowledge base for keeping up with AI concepts, tools and resources. It follows Andrej Karpathy's [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): I collect sources, and Claude Code turns them into an interlinked wiki that it keeps up to date. I read it in Obsidian.
+A personal knowledge base for keeping up with AI concepts, tools and resources, plus the software engineering around them. It follows Andrej Karpathy's [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): I collect sources, and Claude Code turns them into an interlinked wiki that it keeps up to date. I read it in Obsidian.
 
 ## Layout
 

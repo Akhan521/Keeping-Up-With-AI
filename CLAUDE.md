@@ -2,6 +2,10 @@
 
 A personal knowledge base about AI concepts, tools and resources, built on Karpathy's LLM Wiki pattern (`raw/LLM-Wiki/karpathy-llm-wiki.md`). The user curates sources and asks questions. You maintain the wiki: summarizing, cross-referencing, filing, bookkeeping. This repo is also an Obsidian vault.
 
+## Scope
+
+Subjects the user is learning: AI first (concepts, tools, models, practices, ecosystem), plus software engineering. A topic gets a page, or a `(no page yet)` marker, when it is a subject in its own right. Tools a source mentions only in passing stay plain text. When unsure, ask during the Discuss step.
+
 ## Orient (every session)
 
 1. Read this file.
@@ -82,7 +86,7 @@ Omit **Builds on** when there are no prerequisites. Required sections come first
 
 - Every claim traces to a source page, inline or in `## Sources`. Every page is written from ingested sources.
 - Use `[[wikilinks]]` for existing wiki pages only, on an entity's first mention on a page. Reference raw files by `raw:` path and markdown link.
-- Write a topic that has no page as plain text followed by `*(no page yet)*`, adding `; suggested source: …` when you know a good one.
+- Write an in-scope topic that has no page as plain text followed by `*(no page yet)*`, adding `; suggested source: …` when you know a good one.
 - Every page links to at least one other page and appears in `index.md` (source pages excepted).
 
 ### Keeping current
