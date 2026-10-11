@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Obsidian: editor config stays local; the repo holds knowledge and the schema
+.obsidian/
+
+# Obsidian: deleted-files bin
+.trash/
