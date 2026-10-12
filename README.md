@@ -28,7 +28,7 @@ Claude proposes every commit and waits for my approval before committing and pus
 ## Design notes
 
 - **Sources by topic, wiki by kind of page.** Each source has one main subject, so `raw/` is grouped by topic. Wiki pages connect across tools, so they're grouped by kind (tools, concepts, sources, syntheses), and topics come from links and tags.
-- **Raw files never change after capture.** The wiki can always be traced back to what was actually read.
+- **Raw files change only when a newer version is re-captured,** and git keeps every earlier version. The wiki can always be traced back to what was actually read.
 - **Kebab-case raw files, Title Case wiki pages.** The names can't collide, so every `[[wikilink]]` points to exactly one page.
 - **Every claim cites a source; no pages from general knowledge.** Topics without a page yet appear as plain text with `(no page yet)`, which doubles as a reading list.
 - **Facts that go stale carry "as of" dates.** Versions, APIs, pricing and limits change fast; dated facts tell a reader, or a future Claude session implementing something, what to re-check.

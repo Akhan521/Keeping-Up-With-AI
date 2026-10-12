@@ -25,7 +25,7 @@ updated: 2026-10-11
 **Navigation**
 - **index.md:** a content catalog, one line per page, organized by category and read first when querying. Enough at about 100 sources and hundreds of pages, with no embedding infrastructure.
 - **log.md:** an append-only, chronological record with a consistent, greppable entry prefix.
-- At larger scale, a search engine over the pages, e.g. qmd *(no page yet)*.
+- At larger scale, a search engine over the pages, e.g. qmd *(no page yet; suggested source: the qmd README)*.
 
 **Roles.** The human curates sources, directs the analysis, asks questions and thinks about what it means. The LLM does the summarizing, cross-referencing, filing and bookkeeping. Karpathy keeps the agent open on one side and Obsidian on the other, browsing results as they change.
 

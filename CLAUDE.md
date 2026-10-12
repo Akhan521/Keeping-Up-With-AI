@@ -1,6 +1,6 @@
 # Keeping Up With AI: wiki schema
 
-A personal knowledge base about AI concepts, tools and resources, built on Karpathy's LLM Wiki pattern (`raw/LLM-Wiki/karpathy-llm-wiki.md`). The user curates sources and asks questions. You maintain the wiki: summarizing, cross-referencing, filing, bookkeeping. This repo is also an Obsidian vault.
+A personal knowledge base built on Karpathy's LLM Wiki pattern (`raw/LLM-Wiki/karpathy-llm-wiki.md`). The user curates sources and asks questions. You maintain the wiki: summarizing, cross-referencing, filing, bookkeeping. This repo is also an Obsidian vault.
 
 ## Scope
 
@@ -8,13 +8,12 @@ Subjects the user is learning: AI first (concepts, tools, models, practices, eco
 
 ## Orient (every session)
 
-1. Read this file.
-2. Read recent activity: `grep "^## \[" wiki/log.md | tail -5`.
+Read recent activity: `grep "^## \[" wiki/log.md | tail -5`.
 
 ## Layout
 
 ```
-raw/                     sources as captured; immutable after capture
+raw/                     sources as captured; changed only when a newer version is re-captured
   assets/                images
   <Folder>/              one per product family (Claude, Codex, Cursor) or broad topic (Agents, LLM-Wiki, Industry)
 wiki/                    written and maintained by you
@@ -37,7 +36,7 @@ wiki/                    written and maintained by you
 | source pages | Title Case `Author - Title` | `wiki/sources/Claude/Anthropic - Agent Skills.md` |
 | tool / concept / synthesis pages | Title Case | `Claude Code.md`, `MCP.md` |
 
-The two styles keep raw and wiki filenames distinct, so every `[[wikilink]]` resolves to exactly one wiki page. On a same-folder raw collision, append `-2`.
+The two styles keep raw and wiki filenames distinct, so every `[[wikilink]]` resolves to exactly one wiki page. On a same-folder raw collision, append `-2`. Source page names are unique across the vault; on a collision, append ` (2)`.
 
 ## Pages
 
@@ -66,7 +65,7 @@ Tool and concept pages open with a skimmable header:
 **Builds on:** [[Tool Use]] · function calling *(no page yet; suggested source: OpenAI function-calling docs)*
 ```
 
-Omit **Builds on** when there are no prerequisites. Required sections come first. Add optional sections only when there is real content for them, using these exact headings so they stay greppable:
+Omit **Builds on** when there are no prerequisites. Order sections as: required content sections, then optional sections, then the closing sections (`## Related`, `## Sources`, or `## Pages updated`). Add optional sections only when there is real content for them, using these exact headings so they stay greppable:
 
 | Type | Required | Optional |
 |---|---|---|
@@ -84,14 +83,14 @@ Omit **Builds on** when there are no prerequisites. Required sections come first
 
 ### Linking and claims
 
-- Every claim traces to a source page, inline or in `## Sources`. Every page is written from ingested sources.
+- Every claim traces to a source page, inline or in `## Sources`.
 - Use `[[wikilinks]]` for existing wiki pages only, on an entity's first mention on a page. Reference raw files by `raw:` path and markdown link.
 - Write an in-scope topic that has no page as plain text followed by `*(no page yet)*`, adding `; suggested source: …` when you know a good one.
 - Every page links to at least one other page and appears in `index.md` (source pages excepted).
 
 ### Keeping current
 
-- Date anything an implementation depends on, plus numbers: versions, model IDs, CLI flags, API shapes, config formats, pricing, limits, benchmarks. Format: `(as of 2026-10, [[Source Page]])`.
+- Date only these: what an implementation depends on (versions, model IDs, CLI flags, API shapes, config formats) and fast-moving numbers (pricing, limits, benchmarks). Format: `(as of 2026-10, [[Source Page]])`.
 - When a new source changes a fact, update the page and add a `## Changelog` entry. When sources genuinely disagree, keep both in a callout:
   ```markdown
   > [!warning] Conflict
@@ -112,7 +111,6 @@ Omit **Builds on** when there are no prerequisites. Required sections come first
 ## [2026-10-11] ingest | Karpathy - LLM Wiki
 Created: [[Karpathy - LLM Wiki]], [[LLM Wiki Pattern]]. Updated: none.
 ```
-Entry types: `ingest`, `query`, `synthesis`, `lint`.
 
 ## Workflows
 
@@ -120,7 +118,9 @@ Entry types: `ingest`, `query`, `synthesis`, `lint`.
 
 Triggers: "ingest <url | file | pasted text>" (discuss mode), "quick ingest …" (skip step 4), "ingest these: …" (batch: quick-ingest each in order).
 
-1. **Check for duplicates.** Grep `url:` across `wiki/sources/`; for a source without a URL, look for an existing `Author - Title` source page. If the source is already ingested, tell the user and offer to re-ingest it as an updated version (a new raw file; the old one stays).
+In quick and batch ingest, settle Discuss-step calls conservatively: update existing pages, create a new page only for a subject the source covers in depth, write uncertain topics as plain text without a marker, and list each such call in the Report so the user can overrule it.
+
+1. **Check for duplicates.** Grep `url:` across `wiki/sources/`; for a source without a URL, look for an existing `Author - Title` source page. If the source is already ingested, tell the user and offer to re-ingest it: re-capture the newer version over the same raw file (git keeps the old one), update its source page in place, update affected pages as in any ingest, and log it as `ingest | <Title> (re-ingest)`.
 2. **Capture to raw.** Every input converges on the same state: in `raw/<Folder>/`, named in kebab-case, starting with a YAML header (`url` or `origin`, `author`, `published`).
    - URL: fetch the full text and save it. When the result is incomplete (paywall, X/Twitter, JS-rendered page, truncated output), stop and ask the user to clip it with Obsidian Web Clipper or paste it.
    - Clipped or dropped file: move it into `raw/<Folder>/` and rename it. Obsidian Web Clipper writes the link as `source:`; rename that field to `url:`.
@@ -128,9 +128,9 @@ Triggers: "ingest <url | file | pasted text>" (discuss mode), "quick ingest …"
    - Images go to `raw/assets/`. Binary files (PDFs) keep their content untouched; their metadata lives on the source page.
    - Fill header fields from what the source shows; ask the user for the rest, and leave a field blank rather than guess.
    - Source scope: a GitHub repo means its README plus key docs pages; a docs site means the specific pages the user chose.
-   - From here on the raw file is immutable.
-3. **Read the whole source.** Read long sources in parts.
-4. **Discuss.** Give the user 3–5 key takeaways, the page plan (pages to create, pages to update and which sections) and any contradictions with existing pages. Incorporate their steering.
+   - From here on the raw file changes only when a newer version is re-captured.
+3. **Read the whole source.**
+4. **Discuss.** Give the user 3–5 key takeaways, the page plan (pages to create, pages to update and which sections) and any contradictions with existing pages. Wait for the user's go-ahead before writing.
 5. **Write.** The source page, then new and updated tool and concept pages, following *Pages*. Set `updated:` on every page you change.
 6. **Backfill links.** For each newly created page, grep the wiki for plain-text mentions of its subject, including `(no page yet)` markers, and convert them to `[[wikilinks]]`.
 7. **Update index.md and append to log.md** (one log entry per source).
@@ -149,12 +149,12 @@ A query that changes no files leaves no trace.
 
 ### Lint
 
-Trigger: "lint the wiki". When 10 or more `ingest` entries follow the last `lint` entry in `log.md`, suggest one at the end of an ingest.
+Trigger: "lint the wiki". When 10 or more `ingest` entries follow the last `lint` entry in `log.md` (or the start of the log, before the first lint), suggest one at the end of an ingest.
 
 1. Check every page for:
    - wikilinks that do not resolve
    - orphans, and tool/concept/synthesis pages missing from `index.md`
-   - missing required frontmatter or sections
+   - missing required frontmatter or sections (every page except `index.md` and `log.md`)
    - tool pages with `updated:` older than 90 days
    - "as of" dates older than 6 months
    - unresolved `[!warning] Conflict` callouts
@@ -178,7 +178,7 @@ Commit and push?
 ```
 
 - On approval, commit and push. Without approval, leave the changes uncommitted.
-- The message matches the log entry: `ingest: <Title>`, `query: <page>`, `synthesis: <Title>`, `lint: <summary>`.
+- The message matches the log entry: `ingest: <Title>`, `query: <page>`, `synthesis: <Title>`, `lint: <summary>`. Changes to this file use `schema: <summary>` and are not logged.
 - A batch ingest gets one proposal and one approval, committed as one commit per source.
 
 ## Using the wiki from another repo
