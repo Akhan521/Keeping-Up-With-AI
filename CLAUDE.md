@@ -179,7 +179,8 @@ Commit and push?
 
 - On approval, commit and push. Without approval, leave the changes uncommitted.
 - The message matches the log entry: `ingest: <Title>`, `query: <page>`, `synthesis: <Title>`, `lint: <summary>`. Changes to this file use `schema: <summary>` and are not logged.
-- A batch ingest gets one proposal and one approval, committed as one commit per source.
+- An operation may be split into 2–3 commits when that reads better, e.g. raw capture, then wiki pages, then `index.md` and `log.md`. Each message keeps the log-entry form plus a short parenthetical: `ingest: <Title> (raw capture)`. Show the split in the proposal.
+- A batch ingest gets one proposal and one approval, committed as one commit (or one split set) per source.
 
 ## Using the wiki from another repo
 
